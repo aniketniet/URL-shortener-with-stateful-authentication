@@ -19,22 +19,8 @@ connect()
 
 app.use("/url", urlroute);
 
-app.get("/:shortId", async (req, res) => {
-    const shortId = req.params.shortId;
-    const entry = await URL.findOneAndUpdate(
-      {
-        shortId,
-      },
-      {
-        $push: {
-          visitHistory: {
-            timestamp: Date.now(),
-          },
-        },
-      }
-    );
-    res.redirect(entry.redirectUrl);
-  });
+
+
   
 app.listen(PORT, () => {
   `Server is running on port ${PORT}`;
