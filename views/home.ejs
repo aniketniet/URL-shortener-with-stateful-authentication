@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My App</title>
+    <!-- Include Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="bg-primary text-white text-center p-3">
+      <h1>URL Shortener Application</h1>
+      <div  style="margin-top: 10px;">
+        <a href="/user/logout"
+          ><button class="btn btn-danger">Logout</button></a
+        >
+    </div>
+    </header>
+    <!-- URL Input Form -->
+    <div class="container my-4">
+      <form method="post" action="/url">
+        <div class="form-group">
+          <label for="urlInput">Enter URL</label>
+          <input
+            type="url"
+            class="form-control"
+            name="url"
+            placeholder="Enter URL"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Generate URL</button>
+      </form>
+      
+
+    <!-- Data Table -->
+    <div class="container my-4">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">URL</th>
+            <th scope="col">Generated URL</th>
+            <th scope="col">Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% locals.urls.forEach((url,index) => { %>
+
+          <tr>
+            <td><%= index +1 %></td>
+            <td>http://localhost:8001/url/<b><%= url.shortId %></b></td>
+            <td><%= url.redirectUrl %></td>
+
+            <td><%= url.visitHistory.length %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

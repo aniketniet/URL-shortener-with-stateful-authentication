@@ -9,34 +9,35 @@ async function handleGenerateURL(req, res) {
     shortId: shortID,
     redirectUrl: body.url,
     visitHistory: [],
+    createdBy: req.user._id,
   });
-  return res.json({ id: shortID });
+  return res.redirect("/");
 }
 
 async function handleGetAnalytics(req, res) {
-    const shortId = req.params.shortId;
-    const result = await URL.findOne({ shortId });
-    return res.json({
-      totalClicks: result.visitHistory.length,
-      analytics: result.visitHistory,
-    });
-  }
+  const shortId = req.params.shortId;
+  const result = await URL.findOne({ shortId });
+  return res.json({
+    totalClicks: result.visitHistory.length,
+    analytics: result.visitHistory,
+  });
+}
 
 async function handleRedirect(req, res) {
-    const shortId = req.params.shortId;
-    const entry = await URL.findOneAndUpdate(
-      {
-        shortId,
-      },
-      {
-        $push: {
-          visitHistory: {
-            timestamp: Date.now(),
-          },
+  const shortId = req.params.shortId;
+  const entry = await URL.findOneAndUpdate(
+    {
+      shortId,
+    },
+    {
+      $push: {
+        visitHistory: {
+          timestamp: Date.now(),
         },
-      }
-    );
-    res.redirect(entry.redirectUrl);
+      },
+    }
+  );
+  res.redirect(entry.redirectUrl);
 }
-  
+
 module.exports = { handleGenerateURL, handleGetAnalytics, handleRedirect };
