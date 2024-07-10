@@ -6,7 +6,7 @@ const { all } = require("../routes/url");
 async function handleUserSignup(req, res) {
   const { name, email, password } = req.body;
   const user = await UserData.create({ name, email, password });
-  return res.render("home");
+  return res.render("login");
 }
 
 async function handleUserLogin(req, res) {
